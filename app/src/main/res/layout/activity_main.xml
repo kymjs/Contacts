@@ -1,36 +1,70 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto"
-	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	android:fitsSystemWindows="true"
-	tools:context=".MainActivity">
+	android:orientation="vertical">
 
-	<android.support.design.widget.AppBarLayout
+	<RelativeLayout
+		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:layout_width="match_parent"
-		android:theme="@style/AppTheme.AppBarOverlay">
+		android:background="#fffffbfa"
+		android:paddingBottom="5dp"
+		android:paddingLeft="10dp"
+		android:paddingRight="10dp"
+		android:paddingTop="5dp">
 
-		<android.support.v7.widget.Toolbar
-			android:id="@+id/toolbar"
+		<org.kymjs.contacts.widget.CustomEditText
+			android:id="@+id/school_friend_member_search_input"
 			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:background="?attr/colorPrimary"
-			android:theme="@style/AppTheme.AppBarOverlay"
-			app:popupTheme="@style/AppTheme.PopupOverlay"/>
+			android:layout_height="wrap_content"
+			android:layout_gravity="center_vertical"
+			android:background="@drawable/bg_search_input"
+			android:drawableLeft="@drawable/ic_search"
+			android:drawablePadding="5dp"
+			android:drawableRight="@drawable/ic_edit_text_delbtn"
+			android:freezesText="true"
+			android:gravity="center_vertical"
+			android:hint="搜索"
+			android:imeOptions="actionSearch"
+			android:paddingBottom="2dp"
+			android:paddingTop="2dp"
+			android:singleLine="true"
+			android:textColor="@android:color/black"
+			android:textColorHint="#ffb5b5b5"
+			android:textSize="14sp"/>
+	</RelativeLayout>
 
-	</android.support.design.widget.AppBarLayout>
+	<FrameLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content">
 
-	<include layout="@layout/content_main"/>
+		<ListView
+			android:id="@+id/school_friend_member"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:cacheColorHint="@android:color/transparent"
+			android:divider="@drawable/bg_cut_line"
+			android:dividerHeight="1px"
+			android:fadingEdge="none"
+			android:listSelector="@android:color/transparent"
+			android:scrollbars="none"/>
 
-	<android.support.design.widget.FloatingActionButton
-		android:id="@+id/fab"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="end|bottom"
-		android:layout_margin="@dimen/fab_margin"
-		android:src="@android:drawable/ic_dialog_email"/>
+		<TextView
+			android:id="@+id/school_friend_dialog"
+			android:layout_width="80.0dip"
+			android:layout_height="80.0dip"
+			android:layout_gravity="center"
+			android:background="@drawable/contact_select_pinyin_bg"
+			android:gravity="center"
+			android:textColor="@android:color/white"
+			android:textSize="45sp"
+			android:visibility="gone"/>
 
-</android.support.design.widget.CoordinatorLayout>
+		<net.oschina.zb.ui.widget.SideBar
+			android:id="@+id/school_friend_sidrbar"
+			android:layout_width="20dp"
+			android:layout_height="fill_parent"
+			android:layout_gravity="right"/>
+	</FrameLayout>
+
+</LinearLayout>
