@@ -11,13 +11,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 
-
+/**
+ * 侧边栏
+ */
 public class SideBar extends View {
     // 触摸事件
     private OnTouchingLetterChangedListener onTouchingLetterChangedListener;
     // 26个字母
-    public static String[] b = {"#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q",
-            "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "☆" };
+    public static String[] b = {"#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", 
+            "M", "N", "O", "P", "Q",
+            "R", "S", "T", "U", "V", "W", "X", "Y", "Z"};
     private int choose = -1;// 选中
     private Paint paint = new Paint();
 
@@ -49,7 +52,7 @@ public class SideBar extends View {
         int width = getWidth(); // 获取对应宽度
 
         float singleHeight = (height * 1f) / b.length;// 获取每一个字母的高度
-        singleHeight = (height * 1f - singleHeight/2) / b.length;
+        singleHeight = (height * 1f - singleHeight / 2) / b.length;
         for (int i = 0; i < b.length; i++) {
             paint.setColor(Color.rgb(86, 86, 86));
             paint.setTypeface(Typeface.DEFAULT);
@@ -109,7 +112,8 @@ public class SideBar extends View {
      *
      * @param onTouchingLetterChangedListener
      */
-    public void setOnTouchingLetterChangedListener(OnTouchingLetterChangedListener onTouchingLetterChangedListener) {
+    public void setOnTouchingLetterChangedListener(OnTouchingLetterChangedListener 
+                                                           onTouchingLetterChangedListener) {
         this.onTouchingLetterChangedListener = onTouchingLetterChangedListener;
     }
 
@@ -117,7 +121,6 @@ public class SideBar extends View {
      * 接口
      *
      * @author coder
-     *
      */
     public interface OnTouchingLetterChangedListener {
         void onTouchingLetterChanged(String s);

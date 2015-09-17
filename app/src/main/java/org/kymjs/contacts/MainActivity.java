@@ -96,7 +96,6 @@ public class MainActivity extends KJActivity implements SideBar
                 datas.add(data);
             }
             mFooterView.setText(datas.size() + "位联系人");
-            Collections.sort(datas);
             mAdapter = new ContactAdapter(mListView, datas);
             mListView.setAdapter(mAdapter);
         } catch (JSONException e) {

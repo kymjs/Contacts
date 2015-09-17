@@ -12,8 +12,11 @@ import org.kymjs.kjframe.widget.AdapterHolder;
 import org.kymjs.kjframe.widget.KJAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
+ * 列表适配器
+ *
  * @author kymjs (http://www.kymjs.com/) on 9/16/15.
  */
 public class ContactAdapter extends KJAdapter<Contact> implements SectionIndexer {
@@ -27,10 +30,16 @@ public class ContactAdapter extends KJAdapter<Contact> implements SectionIndexer
         if (datas == null) {
             datas = new ArrayList<>();
         }
+        Collections.sort(datas);
     }
 
     @Override
-    public void convert(AdapterHolder holder, Contact item, boolean isScrolling) {
+    public void convert(AdapterHolder helper, Contact item, boolean isScrolling) {
+    }
+
+    @Override
+    public void convert(AdapterHolder holder, Contact item, boolean isScrolling, int position) {
+
         holder.setText(R.id.contact_title, item.getName());
         ImageView headImg = holder.getView(R.id.contact_head);
         if (isScrolling) {
@@ -42,17 +51,23 @@ public class ContactAdapter extends KJAdapter<Contact> implements SectionIndexer
         TextView tvLetter = holder.getView(R.id.contact_catalog);
         TextView tvLine = holder.getView(R.id.contact_line);
 
-
-        // 根据position获取分类的首字母的Char ascii值
-        int section = getSectionForPosition(holder.getPosition());
-
-        if (holder.getPosition() == getPositionForSection(section)) {
+        //如果是第0个那么一定显示#号
+        if (position == 0) {
             tvLetter.setVisibility(View.VISIBLE);
-            tvLetter.setText("" + item.getFirstChar());
+            tvLetter.setText("#");
             tvLine.setVisibility(View.VISIBLE);
         } else {
-            tvLetter.setVisibility(View.GONE);
-            tvLine.setVisibility(View.GONE);
+
+            //如果和上一个item的首字母不同，则认为是新分类的开始
+            Contact prevData = datas.get(position - 1);
+            if (item.getFirstChar() != prevData.getFirstChar()) {
+                tvLetter.setVisibility(View.VISIBLE);
+                tvLetter.setText("" + item.getFirstChar());
+                tvLine.setVisibility(View.VISIBLE);
+            } else {
+                tvLetter.setVisibility(View.GONE);
+                tvLine.setVisibility(View.GONE);
+            }
         }
     }
 

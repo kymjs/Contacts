@@ -1,6 +1,8 @@
 package org.kymjs.contacts.bean;
 
 /**
+ * 联系人javabean
+ *
  * @author kymjs (http://www.kymjs.com/) on 9/16/15.
  */
 public class Contact implements Comparable<Contact> {
