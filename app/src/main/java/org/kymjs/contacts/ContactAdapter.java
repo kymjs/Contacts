@@ -1,28 +1,85 @@
 package org.kymjs.contacts;
 
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.ImageView;
+import android.widget.SectionIndexer;
+import android.widget.TextView;
 
 import org.kymjs.contacts.bean.Contact;
 import org.kymjs.kjframe.KJBitmap;
 import org.kymjs.kjframe.widget.AdapterHolder;
 import org.kymjs.kjframe.widget.KJAdapter;
 
-import java.util.Collection;
+import java.util.ArrayList;
 
 /**
  * @author kymjs (http://www.kymjs.com/) on 9/16/15.
  */
-public class ContactAdapter extends KJAdapter<Contact> {
+public class ContactAdapter extends KJAdapter<Contact> implements SectionIndexer {
 
     private KJBitmap kjb = new KJBitmap();
-    
-    public ContactAdapter(AbsListView view, Collection<Contact> mDatas) {
+    private ArrayList<Contact> datas;
+
+    public ContactAdapter(AbsListView view, ArrayList<Contact> mDatas) {
         super(view, mDatas, R.layout.item_list_contact);
+        datas = mDatas;
+        if (datas == null) {
+            datas = new ArrayList<>();
+        }
     }
 
     @Override
     public void convert(AdapterHolder holder, Contact item, boolean isScrolling) {
         holder.setText(R.id.contact_title, item.getName());
-        holder.setImageByUrl(kjb, R.id.contact_head, item.getUrl());
+        ImageView headImg = holder.getView(R.id.contact_head);
+        if (isScrolling) {
+            kjb.displayCacheOrDefult(headImg, item.getUrl(), R.drawable.default_head_rect);
+        } else {
+            kjb.displayWithLoadBitmap(headImg, item.getUrl(), R.drawable.default_head_rect);
+        }
+
+        TextView tvLetter = holder.getView(R.id.contact_catalog);
+        TextView tvLine = holder.getView(R.id.contact_line);
+
+
+        // 根据position获取分类的首字母的Char ascii值
+        int section = getSectionForPosition(holder.getPosition());
+
+        if (holder.getPosition() == getPositionForSection(section)) {
+            tvLetter.setVisibility(View.VISIBLE);
+            tvLetter.setText("" + item.getFirstChar());
+            tvLine.setVisibility(View.VISIBLE);
+        } else {
+            tvLetter.setVisibility(View.GONE);
+            tvLine.setVisibility(View.GONE);
+        }
     }
+
+    /**
+     * 根据ListView的当前位置获取分类的首字母的Char ascii值
+     */
+    public int getSectionForPosition(int position) {
+        Contact item = datas.get(position);
+        return item.getFirstChar();
+    }
+
+    /**
+     * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
+     */
+    public int getPositionForSection(int section) {
+        for (int i = 0; i < getCount(); i++) {
+            char firstChar = datas.get(i).getFirstChar();
+            if (firstChar == section) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    @Override
+    public Object[] getSections() {
+        return null;
+    }
+
 }

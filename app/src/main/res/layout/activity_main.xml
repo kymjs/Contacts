@@ -60,7 +60,7 @@
 			android:textSize="45sp"
 			android:visibility="gone"/>
 
-		<net.oschina.zb.ui.widget.SideBar
+		<org.kymjs.contacts.widget.SideBar
 			android:id="@+id/school_friend_sidrbar"
 			android:layout_width="20dp"
 			android:layout_height="fill_parent"
